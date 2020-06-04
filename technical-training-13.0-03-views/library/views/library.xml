@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- window action -->
+    <!--
+        The following tag is an action definition for a "window action",
+        that is an action opening a view or a set of views
+    -->
+    <record model="ir.actions.act_window" id="rentals_list_action">
+        <field name="name">Rentals</field>
+        <field name="res_model">library.rental</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first rental
+            </p>
+        </field>
+    </record>
+    <menuitem id="main_library_menu" name="Library"/>
+    <menuitem id="library_menu" name="Library" parent="main_library_menu"/>
+    <menuitem id="rental_menu" name="Rentals" parent="library_menu" action="rentals_list_action"/>
+
+    <!-- Books form view -->
+    <record model="ir.ui.view" id="book_form_view">
+        <field name="name">book.form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form string="Book Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="author_ids"  domain="[('partner_type', '=', 'author')]"/>
+                            <field name="edition_date"/>
+                            <field name="isbn"/>
+                            <field name="publisher_id"/>
+                        </group>
+                        <group>
+                            <tree>
+                                <field name="rental_ids"/>
+                            </tree>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="book_tree_view">
+        <field name="name">book.tree</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree string="Book Tree">
+                <field name="name"/>
+                <field name="author_ids" widget="many2many_tags"/>
+                <field name="edition_date"/>
+                <field name="isbn"/>
+                <field name="publisher_id"/>
+            </tree>
+        </field>
+    </record>
+
+     <record model="ir.ui.view" id="book_search_view">
+            <field name="name">course.search</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="isbn"/>
+                    <field name="author_ids"  domain="[('partner_type', '=', 'author')]"/>
+                </search>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="book_list_action">
+        <field name="name">Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first book
+            </p>
+        </field>
+    </record>
+    <menuitem id="book_menu" name="Books" parent="library_menu" action="book_list_action"/>
+
+    <record model="ir.actions.act_window" id="partner_list_action">
+        <field name="name">Partners</field>
+        <field name="res_model">library.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first partner
+            </p>
+        </field>
+    </record>
+    <menuitem id="partner_menu" name="Partners" parent="library_menu" action="partner_list_action"/>
+    <record model="ir.actions.act_window" id="publisher_list_action">
+        <field name="name">Publishers</field>
+        <field name="res_model">library.publisher</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first book
+            </p>
+        </field>
+    </record>
+    <menuitem id="publisher_menu" name="Publishers" parent="library_menu" action="publisher_list_action"/>
+</odoo>
