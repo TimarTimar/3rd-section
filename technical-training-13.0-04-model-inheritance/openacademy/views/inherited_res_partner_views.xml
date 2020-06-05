@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Inherit form view-->
+    <record id="inh_form_res_partner" model="ir.ui.view">
+        <field name="name">Res Partner Inherited Form View</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="instructor" string="is Instructor"/>
+                <field name="session_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+    <!--Inherit tree view-->
+    <record id="inh_tree_res_partner" model="ir.ui.view">
+        <field name="name">Res Partner Inherited Tree View</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="instructor" string="is Instructor"/>
+                <field name="session_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -29,6 +29,7 @@
         "views/session_views.xml",
         "views/menu_views.xml",
         "data/openacademy_data.xml",
+        "views/inherited_res_partner_views.xml",
     ],
     # only loaded in demonstration mode
     'demo':        [],

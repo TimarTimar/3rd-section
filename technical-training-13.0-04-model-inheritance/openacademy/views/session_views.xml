@@ -29,7 +29,7 @@
                             <field name="course_id"/>
                             <field name="responsible_id"/>
                             <field name="level"/>
-                            <field name="instructor_id"/>
+                            <field name="instructor_id" domain="[('instructor','=',True)]"/>
                             <field name="active"/>
                         </group>
                         <group>
@@ -41,7 +41,7 @@
                         </group>
                     </group>
                     <label for="attendee_ids"/>
-                    <field name="attendee_ids"/>
+                    <field name="attendee_ids" domain="[('instructor','=',False)]"/>
                 </sheet>
             </form>
         </field>
