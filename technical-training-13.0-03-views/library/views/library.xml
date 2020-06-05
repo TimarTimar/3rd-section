@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!--Rental views-->
+    <record model="ir.ui.view" id="rent_form_view">
+        <field name="name">rental.form</field>
+        <field name="model">library.rental</field>
+        <field name="arch" type="xml">
+            <form string="Rental Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="customer_id" domain="[('partner_type', '=', 'customer')]"/>
+                            <field name="book_id"/>
+                            <field name="state"/>
+                            <field name="rental_date"/>
+                            <field name="return_date"/>
+                        </group>
+                        <group>
+                            <field name="customer_address"/>
+                            <field name="customer_email"/>
+                            <field name="book_authors" widget="many2many_tags" domain=""/>
+                            <field name="book_edition_date"/>
+                            <field name="book_publisher"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="rental_tree_view">
+        <field name="name">rental.tree</field>
+        <field name="model">library.rental</field>
+        <field name="arch" type="xml">
+            <tree string="Rental Tree" decoration-danger="state=='late'" decoration-success="state=='closed'">
+                <field name="customer_id"/>
+                <field name="book_id"/>
+                <field name="rental_date"/>
+                <field name="return_date"/>
+                <field name="state"/>
+                <field name="customer_address"/>
+                <field name="customer_email"/>
+                <field name="book_authors" widget="many2many_tags" domain=""/>
+                <field name="book_edition_date"/>
+                <field name="book_publisher"/>
+            </tree>
+        </field>
+    </record>
 
     <!-- window action -->
     <!--
@@ -30,7 +75,8 @@
                     <group>
                         <group>
                             <field name="name"/>
-                            <field name="author_ids"  domain="[('partner_type', '=', 'author')]"/>
+                            <field name="author_ids" domain="[('partner_type', '=', 'author')]"
+                                   widget="many2many_tags"/>
                             <field name="edition_date"/>
                             <field name="isbn"/>
                             <field name="publisher_id"/>
@@ -59,17 +105,17 @@
         </field>
     </record>
 
-     <record model="ir.ui.view" id="book_search_view">
-            <field name="name">course.search</field>
-            <field name="model">library.book</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="name"/>
-                    <field name="isbn"/>
-                    <field name="author_ids"  domain="[('partner_type', '=', 'author')]"/>
-                </search>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="book_search_view">
+        <field name="name">course.search</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="isbn"/>
+                <field name="author_ids" domain="[('partner_type', '=', 'author')]"/>
+            </search>
+        </field>
+    </record>
 
     <record model="ir.actions.act_window" id="book_list_action">
         <field name="name">Books</field>
@@ -82,6 +128,46 @@
         </field>
     </record>
     <menuitem id="book_menu" name="Books" parent="library_menu" action="book_list_action"/>
+
+    <!--Partner views-->
+    <record model="ir.ui.view" id="partner_form_view">
+        <field name="name">partner.form</field>
+        <field name="model">library.partner</field>
+        <field name="arch" type="xml">
+            <form string="Partner Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" domain="[('partner_type', '=', 'customer')]"/>
+                            <field name="email"/>
+                            <field name="address"/>
+                            <field name="partner_type"/>
+                        </group>
+                        <group>
+                            <tree>
+                                <xpath expr="//field[@name='x_rental_ids']" position="after">
+                                    <field name="rental_ids"
+                                           attrs="{'invisible': [('partner_type', '!=', 'customer')]}"/>
+                                </xpath>
+                            </tree>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="partner_tree_view">
+        <field name="name">partner.tree</field>
+        <field name="model">library.partner</field>
+        <field name="arch" type="xml">
+            <tree string="Partner Tree">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="address"/>
+                <field name="partner_type"/>
+            </tree>
+        </field>
+    </record>
 
     <record model="ir.actions.act_window" id="partner_list_action">
         <field name="name">Partners</field>
@@ -102,6 +188,20 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Create the first book
             </p>
+        </field>
+    </record>
+        <record model="ir.ui.view" id="partner_search_view">
+        <field name="name">partner.search</field>
+        <field name="model">library.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                 <filter string="Customers" name="customers" domain="[('partner_type','=','customer')]"
+                   help="Customer type partner"/>
+                <filter string="Authors" name="authors" domain="[('partner_type','=','author')]"
+                   help="Customer type author"/>
+               <filter string="Partner type" name="partner_type" context="{'group_by':'partner_type'}"/>
+            </search>
         </field>
     </record>
     <menuitem id="publisher_menu" name="Publishers" parent="library_menu" action="publisher_list_action"/>
