@@ -21,6 +21,21 @@
             action="library.book_action"
     />
 
+        <menuitem
+            id="cbook_menu"
+            name="CBooks"
+            parent="library.menu_root"
+            sequence="10"
+    />
+
+    <menuitem
+            id="cbook_menu_action"
+            name="CBooks"
+            parent="library.cbook_menu"
+            sequence="10"
+            action="library.cbook_action"
+    />
+
     <menuitem
             id="partner_menu"
             name="Partners"

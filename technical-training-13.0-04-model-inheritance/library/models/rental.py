@@ -7,7 +7,7 @@ class Rentals(models.Model):
     _description = 'Book rental'
 
     customer_id = fields.Many2one('library.partner', string='Customer')
-    book_id = fields.Many2one('library.book', string='Book')
+    cbook_id = fields.Many2one('library.cbook', string='CBook')
 
     rental_date = fields.Date()
     return_date = fields.Date()
@@ -15,6 +15,6 @@ class Rentals(models.Model):
     customer_address = fields.Text(related='customer_id.address')
     customer_email = fields.Char(related='customer_id.email')
 
-    book_authors = fields.Many2many(related='book_id.author_ids')
-    book_edition_date = fields.Date(related='book_id.edition_date')
-    book_publisher = fields.Many2one(related='book_id.publisher_id')
+    book_authors = fields.Many2many(related='cbook_id.author_ids')
+    book_edition_date = fields.Date(related='cbook_id.edition_date')
+    book_publisher = fields.Many2one(related='cbook_id.publisher_id')

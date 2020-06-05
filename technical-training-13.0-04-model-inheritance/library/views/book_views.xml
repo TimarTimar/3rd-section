@@ -1,8 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="book_view_list" model="ir.ui.view">
+        <field name="name">library.book.tree</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="author_ids" widget="many2many_tags"/>
+                <field name="isbn"/>
+                <field name="edition_date"/>
+                <field name="publisher_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="book_view_form" model="ir.ui.view">
+        <field name="name">library.book.form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="author_ids" widget="many2many_tags"/>
+                        <field name="isbn"/>
+                        <field name="edition_date"/>
+                        <field name="publisher_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Cbooks" name="cbooks">
+                            <tree>
+                                <field name="cbook_ids"/>
+                            </tree>
+                        </page>
+                        <!--
+                        <page string="Rentals" name="book_rentals">
+                            <tree>
+                                <field name="rental_ids"/>
+                            </tree>
+                        </page>
+                        -->
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
     <record id="book_action" model="ir.actions.act_window">
         <field name="name">Books</field>
         <field name="res_model">library.book</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--Cbook form and action-->
+    <record id="cbook_view_list" model="ir.ui.view">
+        <field name="name">library.cbook.tree</field>
+        <field name="model">library.cbook</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Book's name"/>
+                <field name="author_ids" widget="many2many_tags"/>
+                <field name="isbn"/>
+                <field name="edition_date"/>
+                <field name="publisher_id"/>
+                <field name="book_reference"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cbook_view_form" model="ir.ui.view">
+        <field name="name">library.cbook.form</field>
+        <field name="model">library.cbook</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="Book's name"/>
+                        <field name="author_ids" widget="many2many_tags"/>
+                        <field name="isbn"/>
+                        <field name="edition_date"/>
+                        <field name="publisher_id"/>
+                        <field name="book_reference"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="cbook_action" model="ir.actions.act_window">
+        <field name="name">CBooks</field>
+        <field name="res_model">library.cbook</field>
         <field name="view_mode">tree,form</field>
     </record>
 </odoo>

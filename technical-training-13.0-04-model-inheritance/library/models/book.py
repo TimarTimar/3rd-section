@@ -12,5 +12,19 @@ class Books(models.Model):
     edition_date = fields.Date()
     isbn = fields.Char(string='ISBN')
     publisher_id = fields.Many2one('library.publisher', string='Publisher')
+    cbook_ids = fields.One2many('library.cbook', 'name', string="Each uniqe book")
 
-    rental_ids = fields.One2many('library.rental', 'book_id', string='Rentals')
+    #rental_ids = fields.One2many('library.rental', 'book_id', string='Rentals')
+
+
+class cbook(models.Model):
+    _name = 'library.cbook'
+    _description = 'piece of books'
+
+    _inherits = {
+        'library.book': 'name',
+    }
+
+    book_reference = fields.Char(string='Reference number', required="True")
+
+    book_id = fields.Many2one('library.book', ondelete="cascade")
